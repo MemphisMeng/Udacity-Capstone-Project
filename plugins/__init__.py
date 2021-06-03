@@ -7,5 +7,6 @@ from plugins import operators
 class UdacityPlugin(AirflowPlugin):
     name = "udacity_plugin"
     operators = [
-        operators.loadTableOperator
+        operators.loadTableOperator,
+        operators.pandas2SparkOperator
     ]
