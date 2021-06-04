@@ -12,7 +12,7 @@ This recommendation system is scalable and resilient to higher-scale data.
 
 ## Data Warehouse Architecture
 
-![Screen Shot 2021-06-03 at 11.02.03 PM](/Users/memphismeng/Desktop/Screen Shot 2021-06-03 at 11.02.03 PM.png)
+![Screen Shot 2021-06-03 at 11.02.03 PM](Screen Shot 2021-06-03 at 11.02.03 PM.png)
 
 ## Data Sources:
 
@@ -68,7 +68,7 @@ This recommendation system is scalable and resilient to higher-scale data.
 
    You can check it out [here](https://recommendation-sys.herokuapp.com)!
 
-   ![Screen Shot 2021-06-03 at 11.42.02 PM](/Users/memphismeng/Library/Application Support/typora-user-images/Screen Shot 2021-06-03 at 11.42.02 PM.png)
+   ![Screen Shot 2021-06-03 at 11.42.02 PM](Screen Shot 2021-06-03 at 11.42.02 PM.png)
 
 ## Scenarios
 
