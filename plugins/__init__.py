@@ -8,5 +8,8 @@ class UdacityPlugin(AirflowPlugin):
     name = "udacity_plugin"
     operators = [
         operators.loadTableOperator,
-        operators.pandas2SparkOperator
+        operators.pandas2SparkOperator,
+        operators.recommendationOperator,
+        operators.tweetFeedOperator,
+        operators.DataQualityOperator
     ]

@@ -10,6 +10,8 @@ from airflow import DAG
 from decouple import config
 from airflow.operators.dummy import DummyOperator
 from plugins.operators import loadTableOperator
+from plugins.operators import recommendationOperator
+from plugins.operators import DataQualityOperator
 
 #config = configparser.ConfigParser()
 #config.read('config.cfg')
@@ -66,7 +68,7 @@ default_args = {
 dag = DAG('udac_example_dag',
             default_args=default_args,
             description='Create Data Warehouse in DynamoDB and Recommendation System',
-            schedule_interval='0 * * * *'
+            schedule_interval='@once'
             )
 
 def strip_year(text):
@@ -158,7 +160,7 @@ task_id='load_user_table',
 dag=dag,
 spark=spark,
 df=user_df,
-directory="",
+directory="s3://aws-emr-resources-699444535296-us-east-1/data lake/",
 table_name="users"
 )
 
@@ -168,7 +170,7 @@ task_id='load_time_table',
 dag=dag,
 spark=spark,
 df=time_df,
-directory="",
+directory="s3://aws-emr-resources-699444535296-us-east-1/data lake/",
 table_name="time"
 )
 
@@ -178,7 +180,7 @@ task_id='load_tag_table',
 dag=dag,
 spark=spark,
 df=tag_df,
-directory="",
+directory="s3://aws-emr-resources-699444535296-us-east-1/data lake/",
 table_name="tags"
 )
 
@@ -188,7 +190,7 @@ task_id='load_actor_table',
 dag=dag,
 spark=spark,
 df=actor_df,
-directory="",
+directory="s3://aws-emr-resources-699444535296-us-east-1/data lake/",
 table_name="actors"
 )
 
@@ -198,7 +200,7 @@ task_id='load_movie_table',
 dag=dag,
 spark=spark,
 df=movie_df,
-directory="",
+directory="s3://aws-emr-resources-699444535296-us-east-1/data lake/",
 table_name="movies"
 )
 
@@ -208,12 +210,76 @@ task_id='load_rating_table',
 dag=dag,
 spark=spark,
 df=rating_df,
-directory="",
+directory="s3://aws-emr-resources-699444535296-us-east-1/data lake/",
 table_name="rating"
 )
 
-end_operator = DummyOperator(task_id='End_execution', dag=dag)
+phrase_one_operator = DummyOperator(task_id='Phrase_one_execution', dag=dag)
 
-start_operator >> [load_user_table, load_time_table, load_tag_table, load_actor_table, load_movie_table,
-               load_rating_table] >> end_operator
+recommender = recommendationOperator(
+    task_id='create_recommendation',
+    dag=dag,
+    spark=spark,
+    directory="s3://aws-emr-resources-699444535296-us-east-1/data lake/"
+)
+
+## quality tests
+user_test = DataQualityOperator(
+    task_id='user_test',
+    dag=dag,
+    spark=spark,
+    directory="s3://aws-emr-resources-699444535296-us-east-1/data lake/",
+    table_name="users"
+)
+
+time_test = DataQualityOperator(
+    task_id='time_test',
+    dag=dag,
+    spark=spark,
+    directory="s3://aws-emr-resources-699444535296-us-east-1/data lake/",
+    table_name="time"
+)
+
+tag_test = DataQualityOperator(
+    task_id='tag_test',
+    dag=dag,
+    spark=spark,
+    directory="s3://aws-emr-resources-699444535296-us-east-1/data lake/",
+    table_name="tags"
+)
+
+actor_test = DataQualityOperator(
+    task_id='actor_test',
+    dag=dag,
+    spark=spark,
+    directory="s3://aws-emr-resources-699444535296-us-east-1/data lake/",
+    table_name="actors"
+)
+
+movie_test = DataQualityOperator(
+    task_id='movie_test',
+    dag=dag,
+    spark=spark,
+    directory="s3://aws-emr-resources-699444535296-us-east-1/data lake/",
+    table_name="movies"
+)
+
+rating_test = DataQualityOperator(
+    task_id='rating_test',
+    dag=dag,
+    spark=spark,
+    directory="s3://aws-emr-resources-699444535296-us-east-1/data lake/",
+    table_name="rating"
+)
+
+end_operator = DummyOperator(task_id="End_execution", dag=dag)
+
+start_operator >> load_user_table >> user_test >> recommender
+start_operator >> load_time_table >> time_test >> recommender
+start_operator >> load_tag_table >> tag_test >> recommender
+start_operator >> load_actor_table >> actor_test >> recommender
+start_operator >> load_movie_table >> movie_test >> recommender
+start_operator >> load_rating_table >> rating_test >> recommender
+recommender >> end_operator
+
 print("Pipeline Building Complete!")
