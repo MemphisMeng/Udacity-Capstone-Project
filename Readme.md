@@ -12,13 +12,30 @@ This recommendation system is scalable and resilient to higher-scale data.
 
 ## Data Warehouse Architecture
 
-<img src="https://github.com/MemphisMeng/Udacity-Capstone-Project/blob/main/images/Screen%20Shot%202021-06-03%20at%2011.02.03%20PM.png" align="centre">
+<img src="https://github.com/MemphisMeng/Udacity-Capstone-Project/blob/main/images/Screenshot%202021-06-05%20234333.png" align="centre">
 
-## Data Sources:
+## Data Sources
 
 - [MovieLens](https://www.kaggle.com/grouplens/movielens-20m-dataset)
 - [MadeWithML](https://madewithml.com)
 - Twitter API
+
+## Tools
+
+- **PySpark**: Scalable Python package of data wrangling and management
+- **Airflow**: ETL job orchestration tool
+-  **Streamlit**: Light web app framework for ML projects
+- **Heroku**: Free and easy-to-use cloud SaaS
+- **Pandas** & **Numpy**: Data wrangling and transforming tools
+- **SpaCy**: NLP
+- **Twtterscraper**
+
+## Technologies/Methods
+
+- **Snowflake Schema**
+- **Content-based Filtering**
+- **Real-time data feed**
+- **Named Entity Recognition**
 
 ## ETL
 
@@ -69,6 +86,19 @@ This recommendation system is scalable and resilient to higher-scale data.
    You can check it out [here](https://recommendation-sys.herokuapp.com)!
 
    <img src="https://github.com/MemphisMeng/Udacity-Capstone-Project/blob/main/images/Screen%20Shot%202021-06-03%20at%2011.42.02%20PM.png" align="centre">
+
+## ETL process:
+
+<img src="https://github.com/MemphisMeng/Udacity-Capstone-Project/blob/main/images/Screenshot%202021-06-05%20121644.png" align="centre">
+
+<img src="https://github.com/MemphisMeng/Udacity-Capstone-Project/blob/main/images/Screenshot%202021-06-05%20121738.png" align="centre">
+
+## Usage:
+
+1. Type in any integer that is larger than 0;
+2. if it is smaller than 629, you are assumed returning user, then you can choose any genres that you are into;
+3. otherwise, you are a new user, you may either choose the default recommendation or not;
+4. Confirm, go!
 
 ## Scenarios
 

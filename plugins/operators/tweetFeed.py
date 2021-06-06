@@ -1,5 +1,4 @@
 import pandas as pd
-from tweetCollect import scrape
 from collections import Counter
 import en_core_web_sm
 import re
@@ -56,4 +55,3 @@ class tweetFeedOperator(BaseOperator):
             recommendation = recommendation[recommendation.index.isin(best)]
 
         self.spark.createDataFrame(recommendation).write.mode('overwrite').parquet(self.directory + "tweeterFeed")
-        # return recommendation[['id', 'title']]

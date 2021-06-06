@@ -27,6 +27,13 @@ movie_profile = spark.read.parquet("s3://aws-emr-resources-699444535296-us-east-
 
 
 def recommender(user_no):
+'''
+Recommend the movies according to the user's preference given his/her user ID
+@input:
+    user_no: int, user ID
+@return:
+    all_rec: dataframe, with columns of "movieId" and "title"
+'''
     # user predicted rating to all films
     user_predicted_rating = df_predict[['movieId', df_predict.columns[user_no]]]
     # combine film rating and film detail
@@ -39,6 +46,9 @@ def recommender(user_no):
 
 
 def display():
+'''
+Display the components of movie feed to users
+'''
     st.write("""Recommended films for you:""")
     for i in range(len(films)):
         if posters[i] != 404:

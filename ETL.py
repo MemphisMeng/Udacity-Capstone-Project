@@ -72,6 +72,13 @@ dag = DAG('udac_example_dag',
             )
 
 def strip_year(text):
+'''
+The original text contains the year when the film was released. This found is used to extract the title of the film only
+@input:
+    text: string, the format should in like (regex): .*? \(\d{4}\)
+@return:
+    res: string
+'''
     try:
         res = re.findall(r'(.*?) \(\d{4}\)', text)[0]
     except:
@@ -80,6 +87,13 @@ def strip_year(text):
 
 
 def match_tag(tags):
+'''
+Replace the name of tags with their conrresponding IDs
+@input:
+    tags: string, string of a list including tags, being separated by ","
+@return:
+    res: list of integers
+'''
     res = []
     tagList = tags.split(',')
     for tag in tagList:
@@ -92,6 +106,13 @@ def match_tag(tags):
 
 
 def match_actor(actors):
+'''
+Replace the name of actors with their conrresponding IDs
+@input:
+    tags: string, string of a list including actors, being separated by ","
+@return:
+    res: list of integers
+'''
     res = []
     actorList = actors.split(', ')
     for actor in actorList:
