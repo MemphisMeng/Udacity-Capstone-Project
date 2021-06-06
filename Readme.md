@@ -32,7 +32,7 @@ This recommendation system is scalable and resilient to higher-scale data.
 
 ## Technologies/Methods
 
-- **Snowflake Schema**
+- **Snowflake Schema**: the advantage over Star Schema is that the storage saving. Because my data warehouse is basically non-relational due to the existence of columns of list type, normalizing dimension tables is a tradeoff for easier query joins and other OLAP processes, despite the additional complexity of schema.
 - **Content-based Filtering**
 - **Real-time data feed**
 - **Named Entity Recognition**
@@ -99,6 +99,10 @@ This recommendation system is scalable and resilient to higher-scale data.
 2. if it is smaller than 629, you are assumed returning user, then you can choose any genres that you are into;
 3. otherwise, you are a new user, you may either choose the default recommendation or not;
 4. Confirm, go!
+
+#### NOTE:
+
+**Everytime a user click to see the movie feed, the system fetch the existing recommendation from S3 bucket which is stored in parquets.**
 
 ## Scenarios
 
